@@ -12,4 +12,15 @@ body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #0e0620;
+}
+
+/* Radial glow centred behind the slide card */
+.stage-glow::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 65% at 50% 48%, rgba(107, 63, 160, 0.22) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 0;
 }

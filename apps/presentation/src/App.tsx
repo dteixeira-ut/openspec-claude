@@ -31,29 +31,41 @@ export default function App() {
   })
 
   const slide = slides[current]
+  const progressPct = ((current + 1) / slides.length) * 100
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center px-4 py-10 gap-6 font-sans">
-      <div className="w-full max-w-4xl" key={current}>
-        <SlideCard slide={slide} slideIndex={current} />
+    <div className="stage-glow relative min-h-screen bg-[#0e0620] flex flex-col font-sans">
+      {/* Top progress bar */}
+      <div className="fixed top-0 left-0 right-0 h-1 z-50 bg-white/10">
+        <div
+          className="h-full bg-gradient-to-r from-ut-purple via-ut-violet to-ut-indigo transition-all duration-500 ease-out"
+          style={{ width: `${progressPct}%` }}
+        />
       </div>
 
-      {notesOpen && (
-        <div className="w-full max-w-4xl">
-          <NotesPanel notes={slide.notes} />
+      {/* Main content */}
+      <div className="relative z-10 flex flex-col items-center justify-center flex-1 px-4 py-14 gap-6">
+        <div className="w-full max-w-4xl" key={current}>
+          <SlideCard slide={slide} slideIndex={current} />
         </div>
-      )}
 
-      <div className="flex items-center gap-6">
-        <NavControls onPrev={prev} onNext={next} canPrev={canPrev} canNext={canNext} />
-        <ProgressIndicator current={current + 1} total={slides.length} />
-        <button
-          onClick={() => setNotesOpen((o) => !o)}
-          aria-label="Toggle speaker notes"
-          className="rounded-lg border border-gray-300 px-4 py-2 text-sm text-gray-500 hover:border-ut-purple hover:text-ut-purple transition-colors"
-        >
-          {notesOpen ? 'Hide Notes' : 'Notes'}
-        </button>
+        {notesOpen && (
+          <div className="w-full max-w-4xl animate-fade-up">
+            <NotesPanel notes={slide.notes} />
+          </div>
+        )}
+
+        <div className="flex items-center gap-6">
+          <NavControls onPrev={prev} onNext={next} canPrev={canPrev} canNext={canNext} />
+          <ProgressIndicator current={current + 1} total={slides.length} />
+          <button
+            onClick={() => setNotesOpen((o) => !o)}
+            aria-label="Toggle speaker notes"
+            className="rounded-lg border border-white/20 px-4 py-2 text-sm text-white/50 hover:border-ut-purple hover:text-ut-purple transition-colors"
+          >
+            {notesOpen ? 'Hide Notes' : 'Notes'}
+          </button>
+        </div>
       </div>
     </div>
   )

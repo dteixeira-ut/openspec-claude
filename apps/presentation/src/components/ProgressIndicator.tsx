@@ -5,7 +5,7 @@ interface ProgressIndicatorProps {
 
 export function ProgressIndicator({ current, total }: ProgressIndicatorProps) {
   return (
-    <span className="text-sm font-medium text-gray-400">
+    <span className="text-sm font-medium text-white/40 tabular-nums">
       {current} / {total}
     </span>
   )
