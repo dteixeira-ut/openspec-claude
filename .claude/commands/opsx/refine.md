@@ -7,7 +7,7 @@ tags: [workflow, artifacts, experimental]
 
 Refine the delta specs and fix code for an active OpenSpec change. Use when implementation or verification reveals that the change's specifications were incomplete, ambiguous, or incorrect.
 
-This command operates ONLY on active changes in `openspec/changes/`. It NEVER modifies main specs in `openspec/specs/`, archived changes in `openspec/changes/archive/`, or any files outside the active change folder. It never creates a new change.
+This command operates ONLY on active changes in `openspec/changes/`. It NEVER modifies main specs in `openspec/specs/` or archived changes in `openspec/changes/archive/`. It may update repository code and other non-archived files as needed to implement or refine the active change. It never creates a new change.
 
 **Input**: Optionally specify a change name and issue description (e.g., `/opsx:refine add-auth JWT tokens are not checking expiration`). If omitted, infer or prompt.
 
@@ -57,7 +57,7 @@ This command operates ONLY on active changes in `openspec/changes/`. It NEVER mo
    openspec instructions apply --change "<name>" --json
    ```
 
-   Read every file listed under `contextFiles`. Also read the main specs in `openspec/specs/` for any domain the change's delta specs touch — this is needed to classify the issue in step 7. Use `contextFiles` from CLI output; don't assume specific file names.
+   Read every file listed under `contextFiles`. Also read the main specs in `openspec/specs/` for any capability the change's delta specs touch — this is needed to classify the issue in step 7. Use `contextFiles` from CLI output; don't assume specific file names.
 
 6. **Scope check**
 
@@ -84,14 +84,14 @@ This command operates ONLY on active changes in `openspec/changes/`. It NEVER mo
    **Issue**: <brief description>
    **Classification**: <row label>
    **Action**: <cell value>
-   **Affected spec**: <domain>/spec.md (or "code only")
+   **Affected spec**: <capability>/spec.md (or "code only")
    ```
 
    If classification is uncertain, use the **AskUserQuestion tool** to let the user decide.
 
 8. **Update the delta spec (if required)**
 
-   Apply the action from the matrix cell to `openspec/changes/<name>/specs/<domain>/spec.md`. When writing spec updates: describe behavior (not implementation); include at least one Given/When/Then scenario for new or modified requirements; add a single-line refinement comment such as `<!-- Refined: original spec did not specify X; clarified after implementation revealed Y. -->`; follow the project's taxonomy and naming conventions from the config context.
+   Apply the action from the matrix cell to `openspec/changes/<name>/specs/<capability>/spec.md`. When writing spec updates: describe behavior (not implementation); include at least one `#### Scenario:` block with `**WHEN**` / `**THEN**` bullets (matching the style of existing specs — a `**GIVEN**` bullet may be added when preconditions matter, but is optional) for new or modified requirements; add a single-line refinement comment such as `<!-- Refined: original spec did not specify X; clarified after implementation revealed Y. -->`; follow the project's taxonomy and naming conventions from the config context.
 
 9. **Fix the code**
 
@@ -110,7 +110,7 @@ This command operates ONLY on active changes in `openspec/changes/`. It NEVER mo
 **Classification:** <row label>
 
 ### Spec Updated
-- **File:** openspec/changes/<name>/specs/<domain>/spec.md
+- **File:** openspec/changes/<name>/specs/<capability>/spec.md
 - **Action:** <ADDED | MODIFIED | REMOVED | edited ADDED block | deleted ADDED block>
 - **Scenario:** <brief>
 
@@ -153,7 +153,7 @@ This issue is outside the scope of the current change. To track it separately, u
 - NEVER create new tasks in `tasks.md` for the refinement — the fix happens now.
 - If a requirement was ADDED in this change, edit the ADDED block in place — do not create a duplicate MODIFIED block.
 - Keep code changes minimal — fix the issue, nothing more.
-- If classification or affected domain is uncertain, use the **AskUserQuestion tool** — don't guess.
+- If classification or affected capability is uncertain, use the **AskUserQuestion tool** — don't guess.
 - If the change has accumulated several refinements, mention it and suggest the user consider whether the original proposal's scope needs revisiting.
 - Pause on errors, blockers, or unclear requirements.
 
