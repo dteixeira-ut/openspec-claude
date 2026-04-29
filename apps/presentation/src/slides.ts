@@ -107,7 +107,7 @@ export const slides: Slide[] = [
     body: [
       {
         type: 'subheading',
-        content: "A thinking-partner mode for before — or during — a change",
+        content: 'A thinking-partner mode for before — or during — a change',
       },
       {
         type: 'bullets',
@@ -118,7 +118,11 @@ export const slides: Slide[] = [
           'When insights crystallize, offers to capture them into the right artifact',
         ],
       },
-      { type: 'code', content: "/opsx:explore\n# \"I'm thinking about adding real-time sync\"\n# \"The auth refactor is more complex than we thought\"" },
+      {
+        type: 'code',
+        content:
+          '/opsx:explore\n# "I\'m thinking about adding real-time sync"\n# "The auth refactor is more complex than we thought"',
+      },
     ],
     notes:
       "Explore mode is different from all the other skills — it's a stance, not a workflow. There are no required steps and no mandatory output. Use it when you're not sure what to build yet, when an approach has turned out to be more complex than expected mid-implementation, or when you want a second opinion before committing to a design decision. Claude reads existing change artifacts if they exist, so it can ground the conversation in what's already been decided.",
@@ -207,7 +211,6 @@ export const slides: Slide[] = [
     id: 'open-questions',
     title: 'Open Questions',
     body: [
-      { type: 'subheading', content: 'Things we need to resolve before committing' },
       {
         type: 'numbered',
         items: [
@@ -216,6 +219,9 @@ export const slides: Slide[] = [
           'What\'s the right scope for a "change"? One PR? One epic?',
           "How do we handle hotfixes and urgent work that can't follow the full workflow?",
           'How do we measure whether this is actually improving velocity or quality?',
+          'How do we maintain a healthy codebase instead of slop?',
+          'What will code reviews look like?',
+          'What should the limit on a commit be — do we go by tasks implemented?',
         ],
       },
     ],
