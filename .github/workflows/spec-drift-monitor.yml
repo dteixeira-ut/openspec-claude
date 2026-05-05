@@ -54,41 +54,40 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          SPECS=$(cat /tmp/specs.txt)
-          DIFF=$(cat /tmp/diff.txt)
-
-          PROMPT="You are a spec drift analyzer for a spec-driven development project.
-
-Review the following OpenSpec capability specs and the code diff. For each capability spec, determine if the code changes align with, diverge from, or are unrelated to the spec requirements.
-
-SPECS:
-${SPECS}
-
-CODE DIFF:
-${DIFF}
-
-Produce a concise markdown report in this exact format:
-
-## Spec Drift Report
-
-| Capability | Status | Notes |
-|-----------|--------|-------|
-| <name> | ALIGNED / DRIFTED / MISSING / UNRELATED | <brief explanation, max 15 words> |
-
-**Summary:** <1-2 sentences about the overall drift state>
-
-Status definitions:
-- ALIGNED: code change implements or is consistent with the spec
-- DRIFTED: code change contradicts or diverges from the spec
-- MISSING: spec requirement has no corresponding implementation in the diff
-- UNRELATED: code change does not touch this capability
-
-Only list DRIFTED or MISSING capabilities if the diff contains no related changes.
-Keep the report concise — skip UNRELATED capabilities if there are more than 3."
+          {
+            echo "You are a spec drift analyzer for a spec-driven development project."
+            echo ""
+            echo "Review the following OpenSpec capability specs and the code diff. For each capability spec, determine if the code changes align with, diverge from, or are unrelated to the spec requirements."
+            echo ""
+            echo "SPECS:"
+            cat /tmp/specs.txt
+            echo ""
+            echo "CODE DIFF:"
+            cat /tmp/diff.txt
+            echo ""
+            echo "Produce a concise markdown report in this exact format:"
+            echo ""
+            echo "## Spec Drift Report"
+            echo ""
+            echo "| Capability | Status | Notes |"
+            echo "|-----------|--------|-------|"
+            echo "| <name> | ALIGNED / DRIFTED / MISSING / UNRELATED | <brief explanation, max 15 words> |"
+            echo ""
+            echo "**Summary:** <1-2 sentences about the overall drift state>"
+            echo ""
+            echo "Status definitions:"
+            echo "- ALIGNED: code change implements or is consistent with the spec"
+            echo "- DRIFTED: code change contradicts or diverges from the spec"
+            echo "- MISSING: spec requirement has no corresponding implementation in the diff"
+            echo "- UNRELATED: code change does not touch this capability"
+            echo ""
+            echo "Only list DRIFTED or MISSING capabilities if the diff contains no related changes."
+            echo "Keep the report concise — skip UNRELATED capabilities if there are more than 3."
+          } > /tmp/prompt.txt
 
           PAYLOAD=$(jq -n \
             --arg model "gpt-4o-mini" \
-            --arg prompt "$PROMPT" \
+            --rawfile prompt /tmp/prompt.txt \
             '{model: $model, messages: [{role: "user", content: $prompt}], max_tokens: 800}')
 
           RESPONSE=$(curl -s -w "\n%{http_code}" -X POST \
@@ -116,14 +115,14 @@ Keep the report concise — skip UNRELATED capabilities if there are more than 3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          REPORT=$(cat /tmp/report.txt)
-
-          COMMENT="<!-- spec-drift-monitor -->
-${REPORT}
-
----
-> Informational only — this check never blocks merges. Analysis powered by [GitHub Models](https://github.com/marketplace/models)."
+          {
+            echo "<!-- spec-drift-monitor -->"
+            cat /tmp/report.txt
+            echo ""
+            echo "---"
+            echo "> Informational only — this check never blocks merges. Analysis powered by [GitHub Models](https://github.com/marketplace/models)."
+          } > /tmp/comment.txt
 
           gh pr comment ${{ github.event.pull_request.number }} \
-            --body "$COMMENT" \
+            --body-file /tmp/comment.txt \
             --repo ${{ github.repository }}
