@@ -1,6 +1,6 @@
 ---
 name: openspec-summarize
-description: Generate a concise human-readable summary of a completed or archived OpenSpec change. Writes summary.md alongside the spec and change artifacts.
+description: Generate a concise human-readable summary of a completed or archived OpenSpec change. Writes summary.md alongside the change artifacts.
 license: MIT
 compatibility: Requires openspec CLI.
 metadata:
@@ -66,21 +66,14 @@ Generate a concise, human-readable summary of an OpenSpec change.
 
 4. **Write `summary.md` and print to terminal**
 
-   Write the summary to two locations:
-
-   **a) Change archive folder:**
+   Write the summary to the change folder alongside the other artifacts:
    ```
    <change-path>/summary.md
    ```
 
-   **b) Each affected main spec folder** — for every capability with a delta spec:
-   ```
-   openspec/specs/<capability>/summary.md
-   ```
-
    Overwrite any existing `summary.md` without prompting.
 
-   Announce each location written, then print the summary to the terminal.
+   Announce the location written, then print the summary to the terminal.
 
 **Guardrails**
 - If no change is found, report clearly and exit

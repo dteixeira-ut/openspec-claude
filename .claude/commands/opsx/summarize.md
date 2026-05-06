@@ -65,27 +65,16 @@ Generate a concise, human-readable summary of an OpenSpec change.
 
 4. **Write `summary.md` and print to terminal**
 
-   Write the summary to two locations:
-
-   **a) Change archive folder** — alongside the other change artifacts:
+   Write the summary to the change folder alongside the other artifacts:
    ```
    <change-path>/summary.md
    ```
 
-   **b) Each affected main spec folder** — for every capability that has a delta spec in the change (`openspec/changes/<name>/specs/<capability>/`), write the same summary to:
-   ```
-   openspec/specs/<capability>/summary.md
-   ```
-   This makes the summary discoverable from the living spec library, not just the archive.
+   Overwrite any existing `summary.md` without prompting — it is always regenerated from current artifact state.
 
-   Overwrite any existing `summary.md` at either location without prompting — it is always regenerated from current artifact state.
-
-   After writing, announce each location:
+   After writing, announce the location:
    ```
-   Summary written to:
-   - <change-path>/summary.md
-   - openspec/specs/<capability-1>/summary.md
-   - openspec/specs/<capability-2>/summary.md
+   Summary written to: <change-path>/summary.md
    ```
 
    Then print the summary to the terminal.
