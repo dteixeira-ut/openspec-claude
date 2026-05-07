@@ -42,4 +42,4 @@
 - [x] 6.2 Verified the deck builds cleanly (`vite build` — 21 modules transformed, no errors; `tsc -b` clean). All 21 slides reuse existing content types only, so visual-layout regression risk is low. **Caveat:** visual walkthrough in a browser is recommended before sharing externally; this CLI session cannot perform it.
 - [x] 6.3 Confirmed `App.tsx` gates `canPrev = current > 0` and `canNext = current < slides.length - 1`; with `slides.length === 21`, the Previous button is disabled on the title slide and the Next button is disabled on the resources slide by construction
 - [x] 6.4 Confirmed all three external-link rendering paths in `SlideCard.tsx` use `target="_blank"` and `rel="noopener noreferrer"` (lines 11–12, 130–131, 153–154); resources, spec-driven-dev, and open-questions slides all use these paths
-- [ ] 6.5 Run `/opsx:review` against the change to verify spec/task/code coverage before opening a PR
+- [x] 6.5 Run `/opsx:review` against the change to verify spec/task/code coverage before opening a PR — auto-review returned APPROVED
