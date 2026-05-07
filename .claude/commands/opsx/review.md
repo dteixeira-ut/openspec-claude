@@ -1,6 +1,6 @@
 ---
-name: "Review"
-description: "Run a code review of the current implementation"
+name: "OPSX: Review"
+description: "Run a code review of the current implementation against specs and tasks"
 category: Workflow
 tags: [workflow, review, quality]
 ---
@@ -97,6 +97,10 @@ Review implemented code changes and decide whether they are ready to present to 
    ### Notes
    - <optional non-blocking observations>
    ```
+
+**After the review:**
+- If `APPROVED` → suggest `/opsx:archive` as the next step
+- If `CHANGES REQUESTED` → show the issues clearly and wait for guidance before proceeding
 
 **Guardrails**
 - Flag real issues, not style preferences — only block on correctness, security, and completeness
