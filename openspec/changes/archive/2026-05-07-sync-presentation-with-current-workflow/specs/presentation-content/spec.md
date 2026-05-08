@@ -1,67 +1,42 @@
-## Purpose
+## RENAMED Requirements
 
-This capability defines the slide-by-slide content and ordering of the OpenSpec + Claude presentation deck — every slide's headline, subheading, body, and the order in which slides appear. It is the source of truth for what `apps/presentation/src/slides.ts` must render.
-## Requirements
-### Requirement: Speaker notes visible per slide
-Every slide SHALL have speaker notes accessible via a toggle.
+- FROM: `### Requirement: Slide 1 — Title`
+  TO: `### Requirement: Title slide`
 
-#### Scenario: Notes toggle shows and hides notes
-- **WHEN** the presenter presses `n` or clicks the notes toggle button
-- **THEN** the speaker notes for the current slide appear below the slide card
+- FROM: `### Requirement: Slide 2 — The Problem`
+  TO: `### Requirement: Problem slide`
 
-#### Scenario: Notes persist across slide navigation
-- **WHEN** notes are visible and the presenter advances to the next slide
-- **THEN** notes remain visible and display the new slide's notes
+- FROM: `### Requirement: Slide 3 — Spec-Driven Development`
+  TO: `### Requirement: Spec-driven development slide`
 
-### Requirement: Title slide
-The opening slide SHALL introduce the presentation with a clear title and set the tone for what follows.
+- FROM: `### Requirement: Slide 4 — Enter OpenSpec`
+  TO: `### Requirement: Enter OpenSpec slide`
 
-**On screen:**
-- Headline: "OpenSpec + Claude"
-- Subheadline: "A Workflow Evaluation"
-- Supporting line: "Can spec-driven development + AI make us faster and more intentional?"
+- FROM: `### Requirement: Slide 5 — /opsx:propose`
+  TO: `### Requirement: Propose skill slide`
 
-**Speaker notes:** "We're going to walk through a workflow that tries to make AI a more structured partner in software development — not just a code autocomplete, but something that understands why we're building what we're building. By the end, we want to have a clear picture of whether this approach is worth adopting and what questions we still need to answer."
+- FROM: `### Requirement: Slide 6 — /opsx:explore`
+  TO: `### Requirement: Explore skill slide`
 
-#### Scenario: Title slide matches storyboard
-- **WHEN** the app loads
-- **THEN** the first slide displays the headline "OpenSpec + Claude", the subheadline "A Workflow Evaluation", and the supporting line exactly as specified
+- FROM: `### Requirement: Slide 7 — /opsx:apply`
+  TO: `### Requirement: Apply skill slide`
 
-### Requirement: Problem slide
-The second slide SHALL frame the problem the workflow is trying to solve before introducing any solution.
+- FROM: `### Requirement: Slide 8 — /opsx:archive`
+  TO: `### Requirement: Archive skill slide`
 
-**On screen:**
-- Headline: "The Problem with AI-Assisted Development Today"
-- Bullets:
-  - LLMs are powerful but context-hungry — they need to know *why*, not just *what*
-  - Requirements live in Jira, Slack, and people's heads — not where Claude can read them
-  - Every new conversation starts from zero
-  - Code drifts from intent; specs, if they exist, drift from code
+- FROM: `### Requirement: Slide 9 — Pros`
+  TO: `### Requirement: Pros slide`
 
-#### Scenario: Problem slide matches storyboard
-- **WHEN** the user advances to slide 2
-- **THEN** the slide displays the headline and all four bullet points as specified
+- FROM: `### Requirement: Slide 10 — Cons`
+  TO: `### Requirement: Cons slide`
 
-### Requirement: Spec-driven development slide
-This slide SHALL explain the concept of spec-driven development in plain terms.
+- FROM: `### Requirement: Slide 11 — Open Questions`
+  TO: `### Requirement: Open questions slide`
 
-**On screen:**
-- Headline: "Spec-Driven Development"
-- Subheadline: "Write the contract first. Let everything else follow."
-- Bullets:
-  - Requirements are written as testable scenarios: WHEN ___ THEN ___
-  - Code is derived from specs — not the other way around
-  - Unlike TDD: specs are human-readable contracts, not code
-  - Unlike documentation: specs are normative (SHALL/MUST), not descriptive
-- Resource link: "Further reading: Specification by Example →"
+- FROM: `### Requirement: Slide 12 — Resources`
+  TO: `### Requirement: Resources slide`
 
-#### Scenario: Spec-driven dev slide matches storyboard
-- **WHEN** the user advances to slide 3
-- **THEN** the slide displays the headline, subheadline, all four bullets, and the resource link
-
-#### Scenario: Resource link is clickable
-- **WHEN** the user clicks the resource link on slide 3
-- **THEN** it opens in a new browser tab
+## MODIFIED Requirements
 
 ### Requirement: Enter OpenSpec slide
 This slide SHALL introduce OpenSpec as a CLI plus a set of Claude Code skills covering the full development lifecycle, plus CI automation that closes the loop.
@@ -152,41 +127,6 @@ This slide SHALL explain the archive skill as the step that makes the workflow c
 - **WHEN** the user advances to the archive skill slide
 - **THEN** the headline "/opsx:archive", subheadline, all four bullets, and the code block are displayed
 
-### Requirement: Pros slide
-This slide SHALL present the concrete benefits of the OpenSpec + Claude workflow.
-
-**On screen:**
-- Headline: "What Works Well"
-- Bullets:
-  - Claude has rich, structured context — fewer hallucinations, better code
-  - Specs become a durable record of decisions, not just code comments
-  - Consistent artifact structure across features and teams
-  - Faster iteration on design before committing to code
-  - New team members can read the change history to understand *why*
-
-#### Scenario: Pros slide matches storyboard
-- **WHEN** the user advances to the pros slide
-- **THEN** the headline "What Works Well" and all five bullet points are displayed
-
-### Requirement: Cons slide
-This slide SHALL present the honest limitations and costs of the workflow.
-
-**On screen:**
-- Headline: "What We're Not Sure About"
-- Bullets:
-  - Overhead for small or urgent changes — not every fix needs the full workflow
-  - Specs can drift from code at any stage — imprecise specs require mid-implementation fixes, and refinements before or after archive may not flow back into the spec library
-  - Specs are substantially more verbose than the resulting code — difficult to review thoroughly without AI assistance
-  - Even well-scoped changes may need code refinement post-generation — "it works" is not the same as "it works well"
-  - Requires strong guardrails, code pattern guidelines, and feedback loops to maintain output quality over time
-  - LLM outputs still need careful human review — trust but verify
-  - Workflow has a learning curve; team buy-in required
-  - Tooling is early-stage — rough edges exist
-
-#### Scenario: Cons slide matches storyboard
-- **WHEN** the user advances to the cons slide
-- **THEN** the headline "What We're Not Sure About" and all eight bullet points are displayed
-
 ### Requirement: Open questions slide
 This slide SHALL surface unresolved questions framed to invite discussion. Items that have been partially answered by workflow additions SHALL be reframed to acknowledge what is now covered AND what is still open, rather than removed.
 
@@ -239,6 +179,8 @@ The final slide SHALL list curated resources organized by category and SHALL rei
 #### Scenario: All resource links open in a new tab
 - **WHEN** the user clicks any link on the resources slide
 - **THEN** it opens in a new browser tab with `target="_blank"` and `rel="noopener noreferrer"`
+
+## ADDED Requirements
 
 ### Requirement: Slide ordering
 The deck SHALL present slides in this order, grouped into a problem-framing intro, three lifecycle phases (Plan, Build, Ship & Close), a CI-automation slide, and a closing reflection:
@@ -412,4 +354,3 @@ The deck SHALL include a slide between the Ship & Close phase and the Pros slide
 #### Scenario: Closing the loop in CI slide matches storyboard
 - **WHEN** the user advances to the Closing the loop in CI slide
 - **THEN** the headline, subheadline, and all four bullets are displayed
-
