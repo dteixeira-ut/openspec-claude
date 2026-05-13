@@ -10,10 +10,10 @@ Adding a fourth destination is a surgical extension — three small
 edits to existing files plus a new deck directory and its content.
 
 The deck pitches the package extraction phase (extracting
-`templates/opsx/` + `bin/opsx-sync` into `@usertesting/insight-out-opsx`).
+`templates/opsx/` + `bin/opsx-sync` into `@usertestingenterprise/insight-out-opsx`).
 The locked decisions for that work live in user-memory
 `opsx-package-extraction-open-questions` and are the substrate for
-the deck's content: scope `@usertesting/`, package name
+the deck's content: scope `@usertestingenterprise/`, package name
 `insight-out-opsx` (working), private UT org registry, full-bootstrap
 `opsx init`, Codex stays global per
 `codex-placement-matches-upstream`, peer-dep on `openspec` is hard.

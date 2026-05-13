@@ -58,7 +58,7 @@ adoption → close).
 - **WHEN** a viewer reaches the locked-decisions section
 - **THEN** the slides SHALL state each of the five locked decisions
   from user-memory `opsx-package-extraction-open-questions` —
-  npm scope `@usertesting/`, package name `insight-out-opsx`
+  npm scope `@usertestingenterprise/`, package name `insight-out-opsx`
   (working name), UT private org registry, `opsx init` performs
   full bootstrap, Codex placement stays global — without
   paraphrase-induced rewording of the core claims

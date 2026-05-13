@@ -22,7 +22,7 @@ reflect the new mitigation count.
 **Non-Goals:**
 - Reframing or reorganizing the deck.
 - Touching the workflow deck.
-- Authoring slides for the package-extraction phase (`@usertesting/insight-out-opsx`)
+- Authoring slides for the package-extraction phase (`@usertestingenterprise/insight-out-opsx`)
   — that work hasn't shipped yet.
 - Changing the slide rendering shell or theme.
 

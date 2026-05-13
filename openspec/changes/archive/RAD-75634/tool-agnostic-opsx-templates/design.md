@@ -9,7 +9,7 @@ direct references to Claude-specific tool names (`AskUserQuestion`,
 templates. Cursor and Codex models read these as prose and do their best,
 but lose tool-specific affordances; `ScheduleWakeup` has no working
 equivalent at all. This change rewrites the affected bodies to be
-tool-agnostic so the planned `@usertesting/opsx` package extraction can
+tool-agnostic so the planned `@usertestingenterprise/opsx` package extraction can
 honestly advertise tri-tool support.
 
 ## Goals / Non-Goals

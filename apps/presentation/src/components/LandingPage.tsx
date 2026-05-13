@@ -89,7 +89,7 @@ export function LandingPage() {
               <p className="text-gray-600 text-base leading-relaxed">
                 The next phase: extract <code className="text-sm">templates/opsx/</code> and{' '}
                 <code className="text-sm">bin/opsx-sync</code> into a versioned npm package
-                (<code className="text-sm">@usertesting/insight-out-opsx</code>) so every UT
+                (<code className="text-sm">@usertestingenterprise/insight-out-opsx</code>) so every UT
                 repo can pin a version and stay in sync.
               </p>
               <p className="text-ut-blue text-sm font-semibold mt-3 group-hover:underline">
