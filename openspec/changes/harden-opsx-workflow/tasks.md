@@ -31,13 +31,13 @@
 
 ## 5. New `/opsx:plan` command and skill
 
-- [ ] 5.1 Create `.claude/skills/openspec-plan/SKILL.md` following the layout of the existing `openspec-*` skills (frontmatter, input contract, steps, output contract, guardrails)
-- [ ] 5.2 The skill MUST: select an active change, read `proposal.md`/`design.md`/`specs/`/`tasks.md`, run the merge-method preflight (via `gh api repos/{owner}/{repo}` with prompt fallback), and write `openspec/changes/<name>/plan.md`
-- [ ] 5.3 The skill MUST include the rebase recipe verbatim when strategy is `per-capability stack` and merge-method is `squash`
-- [ ] 5.4 The skill MUST apply the ambiguity contract — repo merge-method, sub-PR strategy, intermediate-PR build gate, and stop conditions are must-ask classes if not derivable
-- [ ] 5.5 The skill MUST honour the silent-decisions marker rule: any decision made while authoring `plan.md` without user consultation goes into a `## Decisions made without consultation` section at the bottom of the plan
-- [ ] 5.6 Create `.claude/commands/opsx/plan.md` mirroring the skill body (per the existing command/skill duplication pattern in this repo)
-- [ ] 5.7 Verify the plan artifact is NOT added to `applyRequires` — `/opsx:apply` must continue to run without a plan when none is present
+- [x] 5.1 Create `.claude/skills/openspec-plan/SKILL.md` following the layout of the existing `openspec-*` skills (frontmatter, input contract, steps, output contract, guardrails)
+- [x] 5.2 The skill MUST: select an active change, read `proposal.md`/`design.md`/`specs/`/`tasks.md`, run the merge-method preflight (via `gh api repos/{owner}/{repo}` with prompt fallback), and write `openspec/changes/<name>/plan.md`
+- [x] 5.3 The skill MUST include the rebase recipe verbatim when strategy is `per-capability stack` and merge-method is `squash`
+- [x] 5.4 The skill MUST apply the ambiguity contract — repo merge-method, sub-PR strategy, intermediate-PR build gate, and stop conditions are must-ask classes if not derivable
+- [x] 5.5 The skill MUST honour the silent-decisions marker rule: any decision made while authoring `plan.md` without user consultation goes into a `## Decisions made without consultation` section at the bottom of the plan
+- [x] 5.6 Create `.claude/commands/opsx/plan.md` mirroring the skill body (per the existing command/skill duplication pattern in this repo)
+- [x] 5.7 Verify the plan artifact is NOT added to `applyRequires` — `/opsx:apply` must continue to run without a plan when none is present (verified via `openspec status --change harden-opsx-workflow --json` → `applyRequires: ["tasks"]`)
 
 ## 6. Living spec for the workflow
 
