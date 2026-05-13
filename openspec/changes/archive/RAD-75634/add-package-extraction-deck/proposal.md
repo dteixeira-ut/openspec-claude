@@ -7,7 +7,7 @@ Ticket: RAD-75634 (continuation)
 The presentation app today carries two decks: a forward-looking
 "Workflow" pitch and a backward-looking "Migration Case Study." The
 next phase of opsx work — extracting `templates/opsx/` + `bin/opsx-sync`
-into a versioned npm package (`@usertesting/insight-out-opsx`) — has
+into a versioned npm package (`@usertestingenterprise/insight-out-opsx`) — has
 no slot in either deck. The Workflow deck is general-purpose and
 already long; the Research deck is a closed case study about
 `enriched-video-uploads-v2` and its mitigations. The package
@@ -28,7 +28,7 @@ new repo.
   `slides.ts` and `theme.ts`, mirroring the existing
   `decks/workflow/` and `decks/research/` shape.
 - **Slide content** covering: (1) the problem (template drift across
-  consumer repos), (2) the package shape (`@usertesting/insight-out-opsx`,
+  consumer repos), (2) the package shape (`@usertestingenterprise/insight-out-opsx`,
   UT private registry, peer-dep on `openspec`), (3) the
   bin (`opsx init` and `opsx sync` as subcommands), (4) the
   `opsx init` full-bootstrap contract (runs upstream openspec init,

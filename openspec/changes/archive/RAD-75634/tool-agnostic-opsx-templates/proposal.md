@@ -15,7 +15,7 @@ affordances (structured-option questions, structured task tracking) and in
 the case of `ScheduleWakeup` have no working equivalent at all. Shipping
 this as a "cross-tool" library while the bodies favor one tool would
 mislead consumers. This change makes the templates honestly cross-tool so
-the planned `@usertesting/opsx` extraction can claim parity.
+the planned `@usertestingenterprise/opsx` extraction can claim parity.
 
 ## What Changes
 
@@ -85,7 +85,7 @@ the planned `@usertesting/opsx` extraction can claim parity.
 
 ## Out of scope
 
-- Publishing `@usertesting/opsx` for consumption by other repos. That is
+- Publishing `@usertestingenterprise/opsx` for consumption by other repos. That is
   the next phase, after this change merges and the templates can honestly
   claim cross-tool support.
 - Migrating the template procedural logic away from a "Claude-shaped" flow

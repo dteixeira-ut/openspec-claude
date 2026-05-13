@@ -87,7 +87,7 @@ ended) and we haven't said so.
 ## Out of scope
 
 - Authoring slides about the package extraction phase
-  (`@usertesting/insight-out-opsx`) — that phase has not shipped yet
+  (`@usertestingenterprise/insight-out-opsx`) — that phase has not shipped yet
   and belongs in a future deck update.
 - Touching the workflow deck.
 - Adding new slides outside Section 4 + the close slide + the header

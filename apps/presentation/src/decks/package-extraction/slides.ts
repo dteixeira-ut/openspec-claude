@@ -2,7 +2,7 @@ import type { Slide } from '../../types'
 
 /**
  * Package-extraction deck — the forward-looking pitch for extracting
- * `templates/opsx/` + `bin/opsx-sync` into the `@usertesting/insight-out-opsx`
+ * `templates/opsx/` + `bin/opsx-sync` into the `@usertestingenterprise/insight-out-opsx`
  * npm package. Every load-bearing claim cites either user-memory
  * `opsx-package-extraction-open-questions`, user-memory
  * `codex-placement-matches-upstream`, or an archived change under
@@ -71,8 +71,8 @@ export const packageExtractionSlides: Slide[] = [
       {
         type: 'bullets',
         items: [
-          'npm scope: `@usertesting/` — org-scoped, not personal.',
-          'Package name: `insight-out-opsx` (working). Full id: `@usertesting/insight-out-opsx`. The "insight out" prefix reflects UT product branding; final name confirm before publishing.',
+          'npm scope: `@usertestingenterprise/` — org-scoped, not personal.',
+          'Package name: `insight-out-opsx` (working). Full id: `@usertestingenterprise/insight-out-opsx`. The "insight out" prefix reflects UT product branding; final name confirm before publishing.',
           'Registry: UserTesting private (org) registry — not public npm, not GitHub Packages. Consumers need a `.npmrc` configured for the org registry.',
         ],
       },
@@ -198,7 +198,7 @@ export const packageExtractionSlides: Slide[] = [
       {
         type: 'bullets',
         items: [
-          'Reads templates from `node_modules/@usertesting/insight-out-opsx/templates/opsx/` (not the consumer\'s working tree).',
+          'Reads templates from `node_modules/@usertestingenterprise/insight-out-opsx/templates/opsx/` (not the consumer\'s working tree).',
           'Writes to per-tool command paths exactly as today\'s in-repo `bin/opsx-sync` does: `.claude/commands/opsx/`, `.cursor/commands/`, and `$CODEX_HOME/prompts/`.',
           'Identical CLI flags: `--check`, `--scope`. No behavior change visible to consumers who used the in-repo script.',
           'Banner comment on every generated file names the package as the source so manual editors are warned.',
@@ -278,13 +278,13 @@ export const packageExtractionSlides: Slide[] = [
       {
         type: 'code',
         content: `# 1. Install (peer-dep openspec must be on $PATH first)
-npm install --save-dev @usertesting/insight-out-opsx
+npm install --save-dev @usertestingenterprise/insight-out-opsx
 
 # 2. Bootstrap
 npx opsx init
 
 # Subsequent bumps:
-npm update @usertesting/insight-out-opsx && npx opsx sync`,
+npm update @usertestingenterprise/insight-out-opsx && npx opsx sync`,
       },
       {
         type: 'callout',
