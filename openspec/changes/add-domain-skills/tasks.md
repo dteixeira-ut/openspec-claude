@@ -1,13 +1,13 @@
 ## 1. Folder scaffolding
 
-- [ ] 1.1 Create directory `skills/` at repo root
-- [ ] 1.2 Create directory `skills/migrate-to-nestjs/recipes/`
-- [ ] 1.3 Create directory `skills/service-config-drift/auditors/`
+- [x] 1.1 Create directory `skills/` at repo root
+- [x] 1.2 Create directory `skills/migrate-to-nestjs/recipes/`
+- [x] 1.3 Create directory `skills/service-config-drift/auditors/`
 
 ## 2. `skills/README.md`
 
-- [ ] 2.1 Write the README covering: rationale for hosting domain skills here, concern boundary with `.claude/skills/`, per-skill layout convention (`SKILL.md` + named subfolders), authoring conventions (name file categories, not paths), graduation criteria (multi-author / CI / scope expansion), graduation procedure (copy to new home, leave `MOVED.md` stub for one release cycle)
-- [ ] 2.2 Reference the README from the top-level repo `README.md` `Repository Structure` block so the new folder is discoverable
+- [x] 2.1 Write the README covering: rationale for hosting domain skills here, concern boundary with `.claude/skills/`, per-skill layout convention (`SKILL.md` + named subfolders), authoring conventions (name file categories, not paths), graduation criteria (multi-author / CI / scope expansion), graduation procedure (copy to new home, leave `MOVED.md` stub for one release cycle)
+- [x] 2.2 Reference the README from the top-level repo `README.md` `Repository Structure` block so the new folder is discoverable
 
 ## 3. `migrate-to-nestjs` skill body
 
