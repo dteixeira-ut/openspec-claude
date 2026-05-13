@@ -18,9 +18,9 @@
 
 ## 3. Skill prompt edits — propose
 
-- [ ] 3.1 Edit `.claude/skills/openspec-propose/SKILL.md` to add a "legacy gap-analysis pre-pass" step that runs when `Starting state: brownfield`, enumerating legacy files from the proposal's `Impact` section and prompting "what behavior in each must the new implementation preserve?"
-- [ ] 3.2 Replace the existing `If context is critically unclear, ask the user — but prefer making reasonable decisions to keep momentum` guardrail with the two-class ambiguity contract (must-ask / may-decide) and a reference to the silent-decisions marker rule from §1 and §2
-- [ ] 3.3 Mirror the changes in `.claude/commands/opsx/propose.md`
+- [x] 3.1 Edit `.claude/skills/openspec-propose/SKILL.md` to add a "legacy gap-analysis pre-pass" step that runs when `Starting state: brownfield`, enumerating legacy files from the proposal's `Impact` section and prompting "what behavior in each must the new implementation preserve?"
+- [x] 3.2 Replace the existing `If context is critically unclear, ask the user — but prefer making reasonable decisions to keep momentum` guardrail with the two-class ambiguity contract (must-ask / may-decide) and a reference to the silent-decisions marker rule from §1 and §2
+- [x] 3.3 Mirror the changes in `.claude/commands/opsx/propose.md`
 
 ## 4. Skill prompt edits — apply / refine / pr
 
