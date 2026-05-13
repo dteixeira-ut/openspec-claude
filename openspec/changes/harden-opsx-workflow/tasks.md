@@ -1,13 +1,13 @@
 ## 1. Config-level rules in `openspec/config.yaml`
 
-- [ ] 1.1 Add `rules.proposal` entries requiring a `## Non-code surfaces` section enumerating config, secrets, container/deploy artifacts, CI workflows, observability — each filled or marked `N/A` with reason
-- [ ] 1.2 Add `rules.proposal` entries requiring `Starting state` (brownfield/greenfield) and `Cutover` (greenfield/parallel-run/strangler/in-place) fields
-- [ ] 1.3 Add `rules.design` entries requiring a `## Delivery shape` section (PR shape, base branch, repo merge-method, named `/opsx:*` skill invocations per boundary)
-- [ ] 1.4 Add `rules.spec` entry establishing legacy-exactness precedence on brownfield changes
-- [ ] 1.5 Add `rules.tasks` entry requiring a legacy-reference cleanup companion task for any file deletion (Dockerfile, package.json, helm, CI workflows, argocd-apps)
-- [ ] 1.6 Add a top-level `ambiguity:` block listing the must-ask and may-decide classes from `design.md` Decision 2 (or fold into `rules._global` if the CLI does not support a custom block)
-- [ ] 1.7 Add the silent-decisions marker rule to `rules.proposal`, `rules.design`, `rules.specs`, and `rules.tasks` — same text in all four: "Any decision made without explicit user consultation MUST be recorded in a `## Decisions made without consultation` section at the bottom of the file; omit the section entirely if no such decisions were made"
-- [ ] 1.8 Verify by running `openspec instructions proposal --change <test-change> --json` and confirming both the ambiguity rules and the silent-decisions marker rule surface in the returned `rules` field
+- [x] 1.1 Add `rules.proposal` entries requiring a `## Non-code surfaces` section enumerating config, secrets, container/deploy artifacts, CI workflows, observability — each filled or marked `N/A` with reason
+- [x] 1.2 Add `rules.proposal` entries requiring `Starting state` (brownfield/greenfield) and `Cutover` (greenfield/parallel-run/strangler/in-place) fields
+- [x] 1.3 Add `rules.design` entries requiring a `## Delivery shape` section (PR shape, base branch, repo merge-method, named `/opsx:*` skill invocations per boundary)
+- [x] 1.4 Add `rules.spec` entry establishing legacy-exactness precedence on brownfield changes
+- [x] 1.5 Add `rules.tasks` entry requiring a legacy-reference cleanup companion task for any file deletion (Dockerfile, package.json, helm, CI workflows, argocd-apps)
+- [x] 1.6 Add a top-level `ambiguity:` block listing the must-ask and may-decide classes from `design.md` Decision 2 (or fold into `rules._global` if the CLI does not support a custom block)
+- [x] 1.7 Add the silent-decisions marker rule to `rules.proposal`, `rules.design`, `rules.specs`, and `rules.tasks` — same text in all four: "Any decision made without explicit user consultation MUST be recorded in a `## Decisions made without consultation` section at the bottom of the file; omit the section entirely if no such decisions were made"
+- [x] 1.8 Verify by running `openspec instructions proposal --change <test-change> --json` and confirming both the ambiguity rules and the silent-decisions marker rule surface in the returned `rules` field
 
 ## 2. Silent-decisions marker — review and archive enforcement
 
