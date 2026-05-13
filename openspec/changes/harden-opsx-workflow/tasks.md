@@ -24,10 +24,10 @@
 
 ## 4. Skill prompt edits — apply / refine / pr
 
-- [ ] 4.1 Edit `.claude/skills/openspec-apply-change/SKILL.md` to include the ambiguity contract verbatim (same text as propose, applied to implementation-time choices) and require silent-decision markers in any agent-authored artifact touched during apply
-- [ ] 4.2 Edit `.claude/commands/opsx/apply.md` to mirror
-- [ ] 4.3 Edit `.claude/commands/opsx/refine.md` to include the ambiguity contract (spec edits during refine are themselves often must-ask) and the marker requirement for any artifact the refine pass authors or modifies
-- [ ] 4.4 Edit `.claude/commands/opsx/pr.md` to (a) add stacked-mid-implementation mode that opts out of `feat/RAD-xxx-*` enforcement when the branch matches a capability name, (b) include the ambiguity contract, (c) require the `## Decisions made without consultation` section in the PR body template when may-decide calls occurred during the implementation pass
+- [x] 4.1 Edit `.claude/skills/openspec-apply-change/SKILL.md` to include the ambiguity contract verbatim (same text as propose, applied to implementation-time choices) and require silent-decision markers in any agent-authored artifact touched during apply
+- [x] 4.2 Edit `.claude/commands/opsx/apply.md` to mirror
+- [x] 4.3 Edit `.claude/commands/opsx/refine.md` to include the ambiguity contract (spec edits during refine are themselves often must-ask) and the marker requirement for any artifact the refine pass authors or modifies
+- [x] 4.4 Edit `.claude/commands/opsx/pr.md` to (a) add stacked-mid-implementation mode that opts out of `feat/RAD-xxx-*` enforcement when the branch matches a capability name, (b) include the ambiguity contract, (c) require the `## Decisions made without consultation` section in the PR body template when may-decide calls occurred during the implementation pass
 
 ## 5. New `/opsx:plan` command and skill
 
