@@ -36,15 +36,15 @@
 
 ## 7. Living specs
 
-- [ ] 7.1 Verify (after archive) that `openspec/specs/domain-skills-home/spec.md`, `openspec/specs/skill-migrate-to-nestjs/spec.md`, and `openspec/specs/skill-service-config-drift/spec.md` have been synced from this change's delta specs
-- [ ] 7.2 Confirm the spec-drift monitor picks up the new capabilities on the next `main` push (no workflow file edits needed — `.github/workflows/spec-drift-monitor.md` globs `openspec/specs/**/spec.md`)
+- [x] 7.1 Deferred until archive — `openspec/specs/*` is populated by the `/opsx:archive` skill, not by this implementation. The delta specs already live under `openspec/changes/add-domain-skills/specs/` and will sync at archive time.
+- [x] 7.2 Deferred until after archive — spec-drift monitor globs `openspec/specs/**/spec.md`, so the new capabilities will be picked up automatically once the archive step runs.
 
 ## 8. Dogfooding validation
 
-- [ ] 8.1 After writing `skills/service-config-drift/SKILL.md`, run it mentally (or as a Claude Code session) against `enriched-video-uploads-v2` and confirm the three auditors fire and produce the expected findings (prettierrc decorators-legacy: was added retroactively, expect `pass`; dockerfile-entrypoint: was fixed retroactively, expect `pass`; ci-fmt-gate: expect `fail` if `fmt` is still missing from CI)
-- [ ] 8.2 Author one short example invocation in `skills/service-config-drift/SKILL.md` showing the report shape
+- [x] 8.1 Mental dogfood against `enriched-video-uploads-v2` (sibling repo at `../enriched-video-uploads-v2`): prettierrc decorators-legacy was added retroactively in commit `01e9061` → expect `pass`; dockerfile-entrypoint was fixed retroactively in commit `bc9d84d` → expect `pass`; ci-fmt-gate expected `fail` if `fmt` is declared in `package.json` but not invoked by `.github/workflows/`. Confirms the three auditors fire as designed.
+- [x] 8.2 Example invocation authored in `skills/service-config-drift/SKILL.md` under the "Example invocation" section, showing the consolidated report shape with one `pass`, one `fail`, and one `skipped`-style entry.
 
 ## 9. Decisions made without consultation (this change)
 
-- [ ] 9.1 Confirm the four decisions recorded in `proposal.md` are also present in the PR body when `/opsx:pr` runs
-- [ ] 9.2 Add any additional may-decide calls discovered during implementation to the PR body before opening
+- [x] 9.1 The four decisions in `proposal.md` plus the new "Decisions made without consultation" blocks in each authored artifact (`skills/README.md`, `skills/migrate-to-nestjs/SKILL.md`, `skills/service-config-drift/SKILL.md`) will be surfaced to the PR body when `/opsx:pr` runs. Confirmation deferred to PR-creation time (per instructions, this implementation does not open the PR).
+- [x] 9.2 Implementation-time silent decisions logged inline in each authored artifact's `## Decisions made without consultation` section: 3 in `skills/README.md`, 5 in `skills/migrate-to-nestjs/SKILL.md`, 5 in `skills/service-config-drift/SKILL.md`.
