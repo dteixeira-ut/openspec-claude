@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -15,7 +16,7 @@ body {
   background-color: #0c163d;
 }
 
-/* Radial glow centred behind the slide card */
+/* Workflow deck — radial glow centred behind the slide card */
 .stage-glow::before {
   content: '';
   position: fixed;
@@ -23,4 +24,54 @@ body {
   background: radial-gradient(ellipse 70% 65% at 50% 48%, rgba(49, 92, 253, 0.18) 0%, transparent 100%);
   pointer-events: none;
   z-index: 0;
+}
+
+/*
+ * Research deck — paper-grain texture + faint grid overlay.
+ * Both layers are pure CSS (no image assets) per design.md Decision 4.
+ *
+ * Layer 1: tiny radial-gradient stipple, low opacity — reads as grain at viewing distance.
+ * Layer 2: subtle linear-gradient grid (40px squares) — reads as a lab-notebook ruling.
+ * Layer 3: a soft navy→navy-dark vignette so the card still pops off the page.
+ */
+.research-stage::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 25% 30%, rgba(255, 255, 255, 0.04) 0 1px, transparent 1px),
+    radial-gradient(circle at 75% 65%, rgba(255, 255, 255, 0.03) 0 1px, transparent 1px),
+    linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    radial-gradient(ellipse 80% 70% at 50% 50%, rgba(40, 220, 209, 0.06) 0%, transparent 70%);
+  background-size: 6px 6px, 9px 9px, 40px 40px, 40px 40px, 100% 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/*
+ * Hand-drawn-look accent stroke: a slightly off-axis, lightly-feathered line in `ut-blue`.
+ * Implemented as a wide gradient with a soft mask so it reads as a brush mark rather than a bar.
+ */
+.research-accent-stroke {
+  background-image: linear-gradient(
+    92deg,
+    transparent 0%,
+    rgba(49, 92, 253, 0.85) 6%,
+    rgba(49, 92, 253, 0.95) 50%,
+    rgba(40, 220, 209, 0.85) 92%,
+    transparent 100%
+  );
+  border-radius: 1px;
+  transform: skewY(-0.3deg);
+  filter: blur(0.2px);
+}
+
+/* Section-marker text style — small monospace tag for "Frame", "Process", "Findings", etc. */
+.section-marker {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(0, 13, 144, 0.55);
 }
