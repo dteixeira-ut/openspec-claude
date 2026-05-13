@@ -11,10 +11,10 @@
 
 ## 2. Silent-decisions marker — review and archive enforcement
 
-- [ ] 2.1 Edit `.claude/commands/opsx/review.md` to add a "marker check" step: scan the diff for evidence of silent decisions (filename choice not ratified in the conversation, default value introduced, library/pattern choice with no corresponding user input), and surface "Marker missing — likely silent decisions detected" when candidates exist but the artifact has no `## Decisions made without consultation` section
-- [ ] 2.2 Mirror the same check in `.claude/skills/code-review/SKILL.md` so the post-implementation review gate (mandated in repo-root `CLAUDE.md`) also catches missing markers
-- [ ] 2.3 Edit `.claude/commands/opsx/summarize.md` to collect `## Decisions made without consultation` sections from all of the change's artifacts (`proposal.md`, `design.md`, `specs/`, `tasks.md`, `plan.md`) AND from the PR bodies (via `gh pr view --json body`), deduplicate by decision text, and write the union into `summary.md` grouped by source artifact
-- [ ] 2.4 If no may-decide calls were logged anywhere, ensure `summary.md` omits the section entirely (no empty placeholder)
+- [x] 2.1 Edit `.claude/commands/opsx/review.md` to add a "marker check" step: scan the diff for evidence of silent decisions (filename choice not ratified in the conversation, default value introduced, library/pattern choice with no corresponding user input), and surface "Marker missing — likely silent decisions detected" when candidates exist but the artifact has no `## Decisions made without consultation` section
+- [x] 2.2 Mirror the same check in `.claude/skills/code-review/SKILL.md` so the post-implementation review gate (mandated in repo-root `CLAUDE.md`) also catches missing markers
+- [x] 2.3 Edit `.claude/commands/opsx/summarize.md` to collect `## Decisions made without consultation` sections from all of the change's artifacts (`proposal.md`, `design.md`, `specs/`, `tasks.md`, `plan.md`) AND from the PR bodies (via `gh pr view --json body`), deduplicate by decision text, and write the union into `summary.md` grouped by source artifact
+- [x] 2.4 If no may-decide calls were logged anywhere, ensure `summary.md` omits the section entirely (no empty placeholder)
 
 ## 3. Skill prompt edits — propose
 
