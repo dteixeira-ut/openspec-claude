@@ -1,12 +1,98 @@
+import { useEffect, useRef, useState } from 'react'
+
 /**
  * LandingPage — root entry point for the presentation app. Renders three cards
  * (Workflow, Research, Package Extraction) plus a one-paragraph framing block.
- * Uses the workflow deck's stage treatment so the brand entry point feels
- * continuous with the existing experience (design.md Decision 6).
+ *
+ * Clicking a deck card triggers a "hero zoom": the card scales up toward the
+ * centre of the viewport and fades out while the backdrop deepens to navy,
+ * then the route swaps to the deck and `DeckView` mounts. Falls back to a
+ * straight navigation when `prefers-reduced-motion` is set.
  */
 export function LandingPage() {
+  const [zooming, setZooming] = useState(false)
+  const cloneRef = useRef<HTMLElement | null>(null)
+  const animRef = useRef<Animation | null>(null)
+
+  // Cancel an in-flight zoom and remove the cloned overlay if LandingPage
+  // unmounts before the animation finishes (e.g., back-button mid-transition).
+  // Without this, `onfinish` would override the user's navigation and the
+  // detached clone would leak on document.body.
+  useEffect(
+    () => () => {
+      animRef.current?.cancel()
+      cloneRef.current?.remove()
+    },
+    [],
+  )
+
+  function handleDeckClick(e: React.MouseEvent<HTMLAnchorElement>) {
+    const anchor = e.currentTarget
+    const href = anchor.getAttribute('href') ?? '#/'
+
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduce) return // let the native hash navigation happen
+
+    e.preventDefault()
+    const rect = anchor.getBoundingClientRect()
+    const vw = window.innerWidth
+    const vh = window.innerHeight
+
+    const cardCx = rect.left + rect.width / 2
+    const cardCy = rect.top + rect.height / 2
+    const dx = vw / 2 - cardCx
+    const dy = vh / 2 - cardCy
+
+    // Scale so the card grows ~1.6× — feels like "zooming in" without
+    // becoming so large its content reflows visibly during the animation.
+    const scale = 1.6
+
+    // Snapshot the clicked card into a fixed-position clone we can animate
+    // independently of the React tree. Sibling cards fade in place.
+    const clone = anchor.cloneNode(true) as HTMLElement
+    Object.assign(clone.style, {
+      position: 'fixed',
+      top: `${rect.top}px`,
+      left: `${rect.left}px`,
+      width: `${rect.width}px`,
+      height: `${rect.height}px`,
+      margin: '0',
+      zIndex: '60',
+      transformOrigin: 'center center',
+      willChange: 'transform, opacity',
+      pointerEvents: 'none',
+    })
+    document.body.appendChild(clone)
+    cloneRef.current = clone
+    setZooming(true)
+
+    const anim = clone.animate(
+      [
+        { transform: 'translate(0, 0) scale(1)', opacity: 1 },
+        {
+          transform: `translate(${dx}px, ${dy}px) scale(${scale})`,
+          opacity: 0,
+          offset: 1,
+        },
+      ],
+      { duration: 520, easing: 'cubic-bezier(0.22, 0.61, 0.36, 1)', fill: 'forwards' },
+    )
+    animRef.current = anim
+
+    anim.onfinish = () => {
+      clone.remove()
+      cloneRef.current = null
+      animRef.current = null
+      window.location.hash = href.replace(/^#/, '')
+    }
+  }
+
   return (
-    <div className="stage-glow relative min-h-screen bg-ut-navy-dark flex flex-col font-sans">
+    <div
+      className={`stage-glow relative min-h-screen bg-ut-navy-dark flex flex-col font-sans transition-opacity duration-500 ${
+        zooming ? 'landing-zooming' : ''
+      }`}
+    >
       <div className="relative z-10 flex flex-col items-center justify-center flex-1 px-4 py-14 gap-10">
         <header className="w-full max-w-5xl text-center space-y-3 animate-fade-up">
           <p className="section-marker text-white/50">OpenSpec + Claude</p>
@@ -25,6 +111,7 @@ export function LandingPage() {
         <div className="w-full max-w-5xl grid grid-cols-1 md:grid-cols-3 gap-5">
           <a
             href="#/workflow"
+            onClick={handleDeckClick}
             className="group rounded-2xl bg-white shadow-2xl overflow-hidden animate-fade-up hover:-translate-y-0.5 transition-transform"
           >
             <div className="h-1.5 w-full bg-gradient-to-r from-ut-navy via-ut-blue to-ut-teal" />
@@ -46,6 +133,7 @@ export function LandingPage() {
 
           <a
             href="#/research"
+            onClick={handleDeckClick}
             className="group rounded-lg overflow-hidden shadow-lg border border-white/10 animate-fade-up hover:-translate-y-0.5 transition-transform"
             style={{ backgroundColor: '#fafaf8' }}
           >
@@ -78,6 +166,7 @@ export function LandingPage() {
 
           <a
             href="#/package-extraction"
+            onClick={handleDeckClick}
             className="group rounded-2xl bg-white shadow-2xl overflow-hidden animate-fade-up hover:-translate-y-0.5 transition-transform"
           >
             <div className="h-1.5 w-full bg-ut-teal" />

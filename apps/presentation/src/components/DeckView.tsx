@@ -1,9 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import type { Slide, Theme } from '../types'
 import { SlideCard } from './SlideCard'
-import { NavControls } from './NavControls'
-import { ProgressIndicator } from './ProgressIndicator'
-import { NotesPanel } from './NotesPanel'
 
 interface DeckViewProps {
   slides: Slide[]
@@ -13,52 +10,56 @@ interface DeckViewProps {
 }
 
 /**
- * Shared deck renderer used by both workflow and research routes. Encapsulates the
- * keyboard nav, notes-panel toggle, progress-indicator chrome, and watermark previously
- * inlined in `App.tsx`. Theming is fully driven by the provided `theme` prop, so adding
- * a third deck reduces to authoring a `theme.ts` + a `slides.ts` and pointing this
- * component at them.
+ * Parallax scroll renderer. Slides are centred in a vertical stack and each card
+ * fades up as it scrolls into view. The depth effect comes from the fixed stage
+ * backdrop (radial glow / texture) staying put while the foreground column
+ * scrolls over it — no per-card scroll-linked drift, which would otherwise make
+ * later slides shift faster than earlier ones and collide near the bottom.
  */
 export function DeckView({ slides, theme, variant = 'default' }: DeckViewProps) {
-  const [current, setCurrent] = useState(0)
-  const [notesOpen, setNotesOpen] = useState(false)
+  const slotsRef = useRef<Array<HTMLElement | null>>([])
 
-  // Clamp `current` to a valid index when the slide list shrinks (e.g. density
-  // switch). Computed during render rather than via setState-in-effect, per the
-  // react-hooks/set-state-in-effect rule — see React docs "You might not need
-  // an effect."
-  const clampedCurrent = slides.length === 0 ? 0 : Math.min(current, slides.length - 1)
-  const canPrev = clampedCurrent > 0
-  const canNext = clampedCurrent < slides.length - 1
-
+  // Staggered entry: toggle `.in-view` on each slot the first time it crosses
+  // ~25% visibility. We only flip the class on (not off) so cards stay settled
+  // once revealed — re-animating on every scroll back up would feel busy.
   useEffect(() => {
-    function handler(e: KeyboardEvent) {
-      if (e.key === 'ArrowRight' || e.key === 'l') {
-        setCurrent((c) => (c < slides.length - 1 ? c + 1 : c))
-      }
-      if (e.key === 'ArrowLeft' || e.key === 'h') {
-        setCurrent((c) => (c > 0 ? c - 1 : c))
-      }
-      if (e.key === 'n') setNotesOpen((o) => !o)
+    const els = slotsRef.current.filter((el): el is HTMLElement => el != null)
+    if (els.length === 0) return
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduce) {
+      els.forEach((el) => el.classList.add('in-view'))
+      return
     }
-    window.addEventListener('keydown', handler)
-    return () => window.removeEventListener('keydown', handler)
-  }, [slides.length])
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view')
+            io.unobserve(entry.target)
+          }
+        }
+      },
+      { threshold: 0.18, rootMargin: '0px 0px -10% 0px' },
+    )
+    els.forEach((el) => io.observe(el))
+    return () => io.disconnect()
+  }, [slides])
 
-  const slide = slides[clampedCurrent]
-  const progressPct = slides.length ? ((clampedCurrent + 1) / slides.length) * 100 : 0
+  // Deep-link support: if the URL hash carries a `slide-N` suffix, scroll the
+  // corresponding section into view on mount.
+  useEffect(() => {
+    const m = window.location.hash.match(/slide-(\d+)/)
+    if (!m) return
+    const idx = Number.parseInt(m[1], 10)
+    if (Number.isNaN(idx)) return
+    const el = document.getElementById(`slide-${idx}`)
+    if (el) el.scrollIntoView({ behavior: 'instant' as ScrollBehavior, block: 'start' })
+  }, [slides])
 
-  function prev() {
-    if (canPrev) setCurrent(clampedCurrent - 1)
-  }
-  function next() {
-    if (canNext) setCurrent(clampedCurrent + 1)
-  }
-
-  if (!slide) {
+  if (slides.length === 0) {
     return (
       <div className={theme.stageClasses}>
-        <div className="relative z-10 flex flex-col items-center justify-center flex-1 px-4 py-14">
+        <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4">
           <p className="text-white/60">No slides to render.</p>
         </div>
       </div>
@@ -66,46 +67,30 @@ export function DeckView({ slides, theme, variant = 'default' }: DeckViewProps) 
   }
 
   return (
-    <div className={theme.stageClasses}>
-      {/* Top progress bar */}
-      <div className="fixed top-0 left-0 right-0 h-1 z-50 bg-white/10">
-        <div
-          className="h-full bg-gradient-to-r from-ut-navy via-ut-blue to-ut-teal transition-all duration-500 ease-out"
-          style={{ width: `${progressPct}%` }}
-        />
-      </div>
-
-      {/* Home link — small unobtrusive way back to the landing page */}
+    <div className={`${theme.stageClasses} parallax-stage`}>
       <a
         href="#/"
-        className="fixed top-3 left-3 z-50 text-white/40 hover:text-ut-teal text-xs font-mono tracking-wide"
+        className="fixed top-4 left-4 z-50 rounded-full bg-white/5 backdrop-blur-sm border border-white/15 px-4 py-1.5 text-white/70 hover:text-ut-teal hover:border-ut-teal/40 text-xs font-mono tracking-wide transition-colors"
         aria-label="Back to landing"
       >
         ← home
       </a>
 
-      <div className="relative z-10 flex flex-col items-center justify-center flex-1 px-4 py-14 gap-6">
-        <div className="w-full max-w-4xl" key={clampedCurrent}>
-          <SlideCard slide={slide} slideIndex={clampedCurrent} theme={theme} variant={variant} />
-        </div>
-
-        {notesOpen && (
-          <div className="w-full max-w-4xl animate-fade-up">
-            <NotesPanel notes={slide.notes} />
-          </div>
-        )}
-
-        <div className="flex items-center gap-6">
-          <NavControls onPrev={prev} onNext={next} canPrev={canPrev} canNext={canNext} />
-          <ProgressIndicator current={current + 1} total={slides.length} />
-          <button
-            onClick={() => setNotesOpen((o) => !o)}
-            aria-label="Toggle speaker notes"
-            className="rounded-lg border border-white/20 px-4 py-2 text-sm text-white/50 hover:border-ut-blue hover:text-ut-blue transition-colors"
+      <div className="relative z-10 w-full max-w-4xl mx-auto px-4 pt-24 pb-32 flex flex-col items-center gap-20 md:gap-28">
+        {slides.map((slide, i) => (
+          <section
+            key={slide.id ?? i}
+            id={`slide-${i}`}
+            ref={(el) => {
+              slotsRef.current[i] = el
+            }}
+            className="parallax-slot w-full"
           >
-            {notesOpen ? 'Hide Notes' : 'Notes'}
-          </button>
-        </div>
+            <div className="parallax-slot__inner">
+              <SlideCard slide={slide} slideIndex={i} theme={theme} variant={variant} />
+            </div>
+          </section>
+        ))}
 
         <img
           src="./usertesting-logo-white.svg"
