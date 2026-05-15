@@ -67,6 +67,52 @@ body {
   filter: blur(0.2px);
 }
 
+/*
+ * Each slide fades up from 60px below as it scrolls into view (toggled by the
+ * `.in-view` class set via IntersectionObserver in DeckView). Depth comes from
+ * the fixed stage backdrop (`.stage-glow` / `.research-stage`) sitting behind
+ * the column — no scroll-linked per-card translate, since varying drift rates
+ * would cause later slides to overtake earlier ones at the bottom of the deck.
+ */
+.parallax-slot {
+  position: relative;
+}
+
+.parallax-slot__inner {
+  --entry-y: 60px;
+  --entry-opacity: 0;
+  opacity: var(--entry-opacity);
+  transform: translate3d(0, var(--entry-y), 0);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 0.9s cubic-bezier(0.22, 0.61, 0.36, 1);
+  will-change: transform, opacity;
+}
+
+.parallax-slot.in-view .parallax-slot__inner {
+  --entry-y: 0px;
+  --entry-opacity: 1;
+}
+
+/* Landing zoom transition — the entire landing page fades out alongside the
+   cloned card scaling away, so the deck mounts onto a clean stage. */
+.landing-zooming {
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .parallax-slot__inner {
+    --entry-y: 0px;
+    --entry-opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .landing-zooming {
+    opacity: 1;
+  }
+}
+
 /* Section-marker text style — small monospace tag for "Frame", "Process", "Findings", etc. */
 .section-marker {
   font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
